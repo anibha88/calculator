@@ -1,31 +1,64 @@
 <body>
 <script language="JavaScript">
 
+
 function showpay() {
  if ((document.calc.mi.value == null || document.calc.mi.value.length == 0) ||
      (document.calc.rate.value == null || document.calc.rate.value.length == 0)
 ||
-     (document.calc.type.value == null || document.calc.type.value.length == 0))
+     (document.calc.type.value == null || document.calc.type.value.length == 0)
+||
+     (document.calc.slab.value == null || document.calc.slab.value.length == 0))
  { document.calc.pay.value = "Incomplete data";
+   document.calc.post_pay.value = "Incomplete data";
  }
  else
  {
 
+ // Variables declaration
  var monthly_installment = parseFloat(document.calc.mi.value);
  var intr  = parseFloat(document.calc.rate.value)/100;
  var type_of_compounding   = parseFloat(document.calc.type.value);
  var month = parseFloat("1");
- 
- // var result =  monthly_installment + intr;
+ var tax_slab = parseFloat(document.calc.slab.value);
+ var tax_slab_value = getTaxSlab(tax_slab);
+
+ // Calculation part
  var t_pow = type_of_compounding * month/12;
  console.log("This is exponential component",t_pow);
  var temp = 1 + intr/type_of_compounding;
  console.log("This is base value for exponent",temp);
  var temp1 = Math.pow(temp, t_pow);
- var result = - monthly_installment + (monthly_installment*temp1);
- document.calc.pay.value = result.toFixed(2);
+ var pretax_result = - monthly_installment + (monthly_installment*temp1);
+
+ console.log("Tax Slab Value is "+tax_slab_value);
+ var tax_slab_value_percentage = tax_slab_value/100;
+ var temp2 = pretax_result * (1 - tax_slab_value_percentage);
+ console.log(temp2);
+ var post_tax_result = temp2.toFixed(2);
+ console.log(post_tax_result);
+
+
+ // Display the final result
+ document.calc.pay.value = pretax_result.toFixed(2);
+ document.calc.post_pay.value = post_tax_result;
  }
 }
+
+function getTaxSlab(tax_slab) {
+  if( tax_slab == 10 ){
+    return 10.3;
+  }
+  
+  else if ( tax_slab == 20 ){
+    return 20.6;
+  }
+
+  else if ( tax_slab == 30 ){
+    return 30.9;
+  }
+}
+
 
 // -->
 </script>
@@ -64,6 +97,10 @@ size=10></td></tr>
 <tr><td bgcolor="#eeeee">Type of compounding</td><td bgcolor="#aaeeaa"
 align=right><input type=text name=type size=10></td></tr>
 
+<!-- Applicable tax slab(slab) -->
+<tr><td bgcolor="#eeeee">Applicable Tax Slab</td><td bgcolor="#aaeeaa"
+align=right><input type=text name=slab size=10></td></tr>
+
 <!-- End of input fields -->
 
 
@@ -73,6 +110,10 @@ align=right><input type=text name=type size=10></td></tr>
 <tr><td bgcolor="#eeeee">Pretax Total</td><td bgcolor="#eeaaaa"
 align=right><em>Calculated</em> <input
 type=text name=pay size=10></td></tr>
+
+<tr><td bgcolor="#eeeee">Posttax Total</td><td bgcolor="#eeaaaa"
+align=right><em>Calculated</em> <input
+type=text name=post_pay size=10></td></tr>
 
 <tr><td  bgcolor="#aaeeaa"align=center><input type=button onClick='showpay()'
 value=Calculate></td><td bgcolor="#eeeeaa" align=center><input type=reset
