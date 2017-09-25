@@ -17,11 +17,10 @@ function showpay() {
  else
  {
 
- // Variables declaration
+ // Variables declaration and initialization(Get the input values)
  var monthly_installment = parseFloat(document.calc.mi.value);
  var intr  = parseFloat(document.calc.rate.value)/100;
  var type_of_compounding   = parseFloat(document.calc.type.value);
- // var month = parseFloat("1");
  var tax_slab = parseFloat(document.calc.slab.value);
  var tax_slab_value = getTaxSlab(tax_slab);
  var no_of_months = parseFloat(document.calc.months.value);
@@ -31,21 +30,15 @@ function showpay() {
   var month = parseFloat(count);
 
    var t_pow = type_of_compounding * month/12;
-   console.log("This is exponential component",t_pow);
    var temp = 1 + intr/type_of_compounding;
-   console.log("This is base value for exponent",temp);
    var temp1 = Math.pow(temp, t_pow);
    var pretax_result_temp = - monthly_installment + (monthly_installment*temp1);
    var pretax_result = pretax_result_temp.toFixed(2)
-   console.log(pretax_result);
-
-   console.log("Tax Slab Value is "+tax_slab_value);
-   console.log("Total number of months "+no_of_months);
+   
    var tax_slab_value_percentage = tax_slab_value/100;
    var temp2 = pretax_result * (1 - tax_slab_value_percentage);
-   console.log(temp2);
    var post_tax_result = temp2.toFixed(2);
-   console.log(post_tax_result);
+   
 
    var info = { "Month": month, "Recurring Deposit": 10000, "Pre-tax interest": pretax_result, "Post-tax interest": post_tax_result};
    info_arr.push(info);
