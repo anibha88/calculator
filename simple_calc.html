@@ -41,12 +41,14 @@ function showpay() {
    var post_tax_result = temp2.toFixed(2);
    var posttax_total = parseInt(monthly_installment + Math.round(post_tax_result));
 
-   console.log("Pretax total:" + pretax_total);
-   console.log("Posttax Total:" + posttax_total);
-   
+   //console.log("Pretax total:" + pretax_total);
+   //console.log("Posttax Total:" + posttax_total);
+   var tax_to_be_paid_t = parseFloat(pretax_result)-parseFloat(post_tax_result);
+   var tax_to_be_paid = tax_to_be_paid_t.toFixed(2)
+   //console.log("Tax to be paid:" + tax_to_be_paid);
 
-   var info = { "Month": month, "Recurring Deposit": 10000, "Pre-tax interest": pretax_result, "Pre-tax Total": pretax_total, "Post-tax interest": post_tax_result, "Post-tax Total": posttax_total};
-   
+   var info = { "Month": month, "Recurring Deposit": 10000, "Pre-tax interest": pretax_result, "Pre-tax Total": pretax_total, "Post-tax interest": post_tax_result, "Post-tax Total": posttax_total, "Tax to be paid": tax_to_be_paid};
+
    info_arr.push(info);
    console.log(info);
  }
