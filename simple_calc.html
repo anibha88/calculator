@@ -26,6 +26,10 @@ function showpay() {
  var no_of_months = parseFloat(document.calc.months.value);
 
  var info_arr = [];
+ var pretax_total_arr = [0];
+ var pretax_interest_arr = [];
+ var posttax_total_arr = [0];
+ var posttax_interest_arr = [];
  for(count = 1; count <= no_of_months; count ++){
   var month = parseFloat(count);
 
@@ -34,13 +38,20 @@ function showpay() {
    var temp1 = Math.pow(temp, t_pow);
    var pretax_result_temp = - monthly_installment + (monthly_installment*temp1);
    var pretax_result = pretax_result_temp.toFixed(2)
-   var pretax_total = parseInt(monthly_installment + Math.round(pretax_result));
+   
+   var pretax_total_temp = parseFloat(monthly_installment + Math.round(pretax_result));
+   var last_pretax_value = pretax_total_arr.pop();
+   var pretax_total = parseInt(pretax_total_temp + last_pretax_value);
+   pretax_total_arr.push(pretax_total);
    
    var tax_slab_value_percentage = tax_slab_value/100;
    var temp2 = pretax_result * (1 - tax_slab_value_percentage);
    var post_tax_result = temp2.toFixed(2);
-   var posttax_total = parseInt(monthly_installment + Math.round(post_tax_result));
 
+   var posttax_total_temp = parseInt(monthly_installment + Math.round(post_tax_result));
+   var last_posttax_value = posttax_total_arr.pop();
+   var posttax_total = parseInt(posttax_total_temp + last_posttax_value);
+   posttax_total_arr.push(posttax_total);
    //console.log("Pretax total:" + pretax_total);
    //console.log("Posttax Total:" + posttax_total);
    var tax_to_be_paid_t = parseFloat(pretax_result)-parseFloat(post_tax_result);
