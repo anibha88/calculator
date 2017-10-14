@@ -1,4 +1,6 @@
 <body>
+  <div id="name"></div>
+
 <script language="JavaScript">
 
 
@@ -64,6 +66,20 @@ function showpay() {
    console.log(info);
  }
  console.log(info_arr);
+
+      document.getElementById("name").innerHTML = "";
+      for (var I = 0; I < info_arr.length; I++)
+      {
+           nameList = "<li>" + "<span>"+ "Month: "+ info_arr[I]["Month"] + "</span>" +
+                      " " + "<span>"+ "Recurring Deposit: "+ info_arr[I]["Recurring Deposit"] + "</span>" + " "+
+                      " " + "<span>"+ "Pre-tax interest: "+ info_arr[I]["Pre-tax interest"] + "</span>" + " "+
+                      " " + "<span>"+ "Pre-tax Total: "+ info_arr[I]["Pre-tax Total"] + "</span>" + " "+
+                      " " + "<span>"+ "Post-tax interest: "+ info_arr[I]["Post-tax interest"] + "</span>" + " "+
+                      " " + "<span>"+ "Post-tax Total: "+ info_arr[I]["Post-tax Total"] + "</span>" + " "+
+                      " " + "<span>"+ "Tax to be paid: "+ info_arr[I]["Tax to be paid"] + "</span>" + " "+
+                      "</li>" + "<br />";
+           document.getElementById("name").innerHTML += nameList;
+      }
 
  
  }
