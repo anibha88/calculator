@@ -19,16 +19,11 @@ function showpay() {
  var sipMonth = parseInt(sipMonth_s) * 12;
  var rateofReturn = parseFloat(rateofReturn_s,10);
  
-  // calculations goes off here
-    var value1 = (rateofReturn / 100) / 12;
-    var value3 = 1 + value1;
-    var value4 = Math.pow((value3), (sipMonth + 1));
-    var amount1 = (value4 - 1);
-    var amount2 = amount1 / value1;
-    var final_amount = (sipAmount * amount2) - sipAmount;
+  
+    var final_amount = sipAmount * (Math.pow(1 + rateofReturn, sipMonth) - 1) / rateofReturn;
     final_amount = Math.round(final_amount);
     var invest_amount = sipAmount * sipMonth;
-    var interest_total = final_amount - invest_amount;
+  
 
     document.calc.res_amount_invest.value = invest_amount;
     document.calc.res_total_amount.value = final_amount;
